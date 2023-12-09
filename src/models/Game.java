@@ -4,6 +4,7 @@ import src.exception.DuplicateSymbolException;
 import src.exception.InvalidBotCountException;
 import src.exception.InvalidNumberOfPlayersException;
 import src.exception.ThrowNewInvalidDimension;
+import src.strategies.botplayingstrategy.winningstrategy.WinningStrategy;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -55,7 +56,7 @@ public class Game {
         }
 
         public void addPlayer(Player player) {
-            player.add(player);
+            players.add(player);
         }
 
         public void addWinningStrategy(WinningStrategy winningStrategy) {
@@ -66,7 +67,7 @@ public class Game {
             int botCount = 0;
             for (Player player :
                     players) {
-                if (player.getPlayerType().equals(PlayerType.BOT)) {
+                if (player.playerType().equals(PlayerType.BOT)) {
                     botCount++;
                 }
                 if (botCount > 1) {
