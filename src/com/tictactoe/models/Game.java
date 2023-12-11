@@ -22,6 +22,8 @@ public class Game {
     public Game(List<Player> players, Board board, List<WinningStrategy> winningStrategies) {
         this.players = players;
         this.board = board;
+        this.moves = new ArrayList<Move>();
+        this.gameState = GameState.IN_PROGRESS;
         this.winningStrategies = winningStrategies;
     }
 

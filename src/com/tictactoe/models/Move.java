@@ -13,17 +13,15 @@ public class Move {
         return cell;
     }
 
-    public Move setCell(Cell cell) {
+    public void setCell(Cell cell) {
         this.cell = cell;
-        return this;
     }
 
     public Player player() {
         return player;
     }
 
-    public Move setPlayer(Player player) {
+    public void setPlayer(Player player) {
         this.player = player;
-        return this;
     }
 }

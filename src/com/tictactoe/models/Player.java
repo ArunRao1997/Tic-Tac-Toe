@@ -3,14 +3,15 @@ package src.com.tictactoe.models;
 import java.util.Scanner;
 
 public class Player {
-    private Long id;
+    private static int idCounter = 0;
+    private int id;
     private Symbol symbol;
     private String name;
     private PlayerType playerType;
     private Scanner scanner;
 
-    public Player(Long id, Symbol symbol, String name, PlayerType playerType) {
-        this.id = id;
+    public Player(Symbol symbol, String name, PlayerType playerType) {
+        this.id = idCounter++;
         this.symbol = symbol;
         this.name = name;
         this.playerType = playerType;
@@ -24,17 +25,20 @@ public class Player {
         int col = scanner.nextInt();
 
         // TO DO: validate the move or throw exception
+
         // Cell cell = new Cell(row, col, this);
         // return new Move(cell, this);
+
+        board.board().get(row).get(col).setPlayer(this);
         return new Move(new Cell(row, col, this), this);
 
     }
 
-    public Long id() {
+    public int id() {
         return id;
     }
 
-    public Player setId(Long id) {
+    public Player setId(int id) {
         this.id = id;
         return this;
     }
