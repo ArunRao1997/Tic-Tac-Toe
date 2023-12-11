@@ -1,4 +1,4 @@
-package src.models;
+package src.com.tictactoe.models;
 
 import java.util.ArrayList;
 import java.util.List;

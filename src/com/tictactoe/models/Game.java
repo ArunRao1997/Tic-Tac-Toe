@@ -1,10 +1,10 @@
-package src.models;
+package src.com.tictactoe.models;
 
-import src.exception.DuplicateSymbolException;
-import src.exception.InvalidBotCountException;
-import src.exception.InvalidNumberOfPlayersException;
-import src.exception.ThrowNewInvalidDimension;
-import src.strategies.botplayingstrategy.winningstrategy.WinningStrategy;
+import src.com.tictactoe.exception.InvalidBotCountException;
+import src.com.tictactoe.exception.InvalidNumberOfPlayersException;
+import src.com.tictactoe.exception.ThrowNewInvalidDimension;
+import src.com.tictactoe.strategies.winningstrategy.WinningStrategy;
+import src.com.tictactoe.exception.DuplicateSymbolException;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -25,14 +25,42 @@ public class Game {
         this.winningStrategies = winningStrategies;
     }
 
-    public static class Builder() {
+    public List<Player> players() {
+        return players;
+    }
+
+    public Board board() {
+        return board;
+    }
+
+    public List<Move> moves() {
+        return moves;
+    }
+
+    public Player winner() {
+        return winner;
+    }
+
+    public GameState gameState() {
+        return gameState;
+    }
+
+    public int nextPlayerIndex() {
+        return nextPlayerIndex;
+    }
+
+    public List<WinningStrategy> winningStrategies() {
+        return winningStrategies;
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static class Builder {
         private List<Player> players;
         private List<WinningStrategy> winningStrategies;
         private int dimension;
-
-        public static Builder builder() {
-            return new Builder();
-        }
 
         private Builder() {
             this.players = new ArrayList<Player>();
@@ -107,7 +135,7 @@ public class Game {
             validateUniqueSymbolForAllPlayers();
         }
 
-        private Game build() {
+        public Game build() {
             validate();
             return new Game(players, new Board(dimension), winningStrategies);
         }

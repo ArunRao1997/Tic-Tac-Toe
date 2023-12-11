@@ -1,4 +1,4 @@
-package src.exception;
+package src.com.tictactoe.exception;
 
 public class DuplicateSymbolException extends RuntimeException {
     public DuplicateSymbolException(String message) {
