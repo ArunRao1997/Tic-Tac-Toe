@@ -1,5 +1,6 @@
 package src.com.tictactoe.strategies.winningstrategy;
 
+import src.com.tictactoe.exception.GameDrawnException;
 import src.com.tictactoe.models.Board;
 import src.com.tictactoe.models.Move;
 import src.com.tictactoe.models.Player;
@@ -11,6 +12,7 @@ import java.util.List;
 public class OrderWinningStrategy implements WinningStrategy {
 
     private int dimension;
+    private int symbolsAdded;
     private List<HashMap<Character, Integer>> rowSymbolCount = new ArrayList<>(); // []
     private List<HashMap<Character, Integer>> colSymbolCount = new ArrayList<>(); // []
     private HashMap<Character, Integer> topLeftDiagonalSymbolCount = new HashMap<>();
@@ -19,6 +21,8 @@ public class OrderWinningStrategy implements WinningStrategy {
 
     public OrderWinningStrategy(int dimension) {
         this.dimension = dimension;
+        this.symbolsAdded = 0;
+
         for (int i = 0; i < dimension; i++) {
             rowSymbolCount.add(new HashMap<>());
             colSymbolCount.add(new HashMap<>());
@@ -53,11 +57,13 @@ public class OrderWinningStrategy implements WinningStrategy {
      */
     @Override
     public Player checkWinner(Board board, Move lastMove) {
+        symbolsAdded++;
         Player lastMovePlayer = lastMove.player();
         char symbol = lastMove.player().symbol().symbolChar();
         int row = lastMove.cell().row();
         int col = lastMove.cell().col();
         int dimension = board.size();
+
         if (checkForRowWins(row, col, symbol, lastMove) != null)
             return lastMovePlayer;
         else if (checkForColumnWins(row, col, symbol, lastMove) != null)
@@ -66,6 +72,11 @@ public class OrderWinningStrategy implements WinningStrategy {
             return lastMovePlayer;
         else if (checkForCornerWins(row, col, symbol, lastMove) != null)
             return lastMovePlayer;
+
+        if(symbolsAdded == (dimension*dimension)){
+            board.printBoard();
+            throw new GameDrawnException("Game drawn as cells are full");
+        }
         return null;
     }
 
@@ -155,3 +166,12 @@ public class OrderWinningStrategy implements WinningStrategy {
         return null;
     }
 }
+
+//TODO :
+/*
+    Implement 4 classes for Winning Strategy
+    1. RowWinningStrategy
+    2. ColumnWinningStrategy
+    3. DiagonalWinningStrategy
+    4. CornerWinningStrategy
+ */

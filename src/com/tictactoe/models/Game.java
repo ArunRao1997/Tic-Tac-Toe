@@ -1,8 +1,9 @@
 package src.com.tictactoe.models;
 
 import src.com.tictactoe.exception.InvalidBotCountException;
+import src.com.tictactoe.exception.InvalidDimensionException;
 import src.com.tictactoe.exception.InvalidNumberOfPlayersException;
-import src.com.tictactoe.exception.ThrowNewInvalidDimension;
+import src.com.tictactoe.exception.InvalidDimensionException;
 import src.com.tictactoe.strategies.winningstrategy.WinningStrategy;
 import src.com.tictactoe.exception.DuplicateSymbolException;
 
@@ -110,7 +111,7 @@ public class Game {
 
         private void validateDimension() {
             if (dimension < 3 || dimension > 10) {
-                throw new ThrowNewInvalidDimension("Dimension can be either greater than 2 or less than 11");
+                throw new InvalidDimensionException("Dimension can be either greater than 2 or less than 11");
             }
         }
 

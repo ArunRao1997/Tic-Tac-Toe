@@ -2,8 +2,11 @@ package src.com.tictactoe;
 
 import src.com.tictactoe.controller.GameController;
 import src.com.tictactoe.models.*;
+import src.com.tictactoe.strategies.botplayingstrategy.BotPlayingStrategy;
+import src.com.tictactoe.strategies.botplayingstrategy.BotPlayingStrategyFactory;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
@@ -25,6 +28,7 @@ public class TicTacToeGame {
         }
 
         for (int i = 0; i < iteratorNumber; i++) {
+            //TODO : validate if no one passes a duplicate symbol
             System.out.println("What is the name of the player number :" + i + 1);
             String playerName = sc.next();
 
@@ -36,29 +40,41 @@ public class TicTacToeGame {
 
         if (isBotPresent.equals("Y")) {
             System.out.println("What is the name of the BOT :");
-            String playerName = sc.next();
+            String botName = sc.next();
 
             System.out.println("What is the character symbol of the player :");
             String charSymbol = sc.next();
 
-            players.add(new Player(new Symbol(charSymbol.charAt(0)), playerName, PlayerType.BOT));
+            //TODO: take user input for bot difficulty level and create the object accordingly
+            BotDifficultyLevel difficultyLevel = BotDifficultyLevel.EASY;
+            Bot bot = new Bot(new Symbol(charSymbol.charAt(0)),
+                    botName,
+                    difficultyLevel,
+                    BotPlayingStrategyFactory.getBotPlayingStrategyForDificultyLevel(BotDifficultyLevel.EASY));
+            // players.add(new Player(new Symbol(charSymbol.charAt(0)), botName, PlayerType.BOT));
+            players.add(bot);
         }
-        Game game = gameController.CreateGame(dimension, players);
 
+        // randomizes the players in the list
+        Collections.shuffle(players);
+
+        Game game = gameController.CreateGame(dimension, players);
+        int playerIndex = 0;
+        //TODO : optimise the while loop and handle exception gracefully
         while (game.gameState().equals(GameState.IN_PROGRESS)) {
             System.out.println("Current Board Status");
             gameController.displayBoard(game);
-
+            playerIndex++;
+            playerIndex = playerIndex % players.size();
             // TODO : Undo
+            Move movePlayed = gameController.executeMove(game, players.get(playerIndex));
+            Player winner = gameController.checkWinner(game, movePlayed);
+            if (winner != null) {
+                gameController.displayBoard(game);
+                System.out.println("Winner is : " + winner.name());
+                break;
+            }
+        }
 
-            gameController.executeMove(game);
-            // TODO : Write logic for giving each player option to play
-        }
-        System.out.println("Game has ended, result was : ");
-        if (gameController.gameState(game).equals(GameState.DRAW)) {
-            System.out.println("Game was a Draw");
-        } else {
-            System.out.println("Game is won by : " + gameController.getWinner(game));
-        }
     }
 }

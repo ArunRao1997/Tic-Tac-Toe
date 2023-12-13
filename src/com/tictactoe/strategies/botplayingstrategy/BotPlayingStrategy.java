@@ -4,6 +4,6 @@ import src.com.tictactoe.models.Board;
 import src.com.tictactoe.models.Move;
 import src.com.tictactoe.models.Player;
 
-public interface BotPlayingStrategy {
+public interface  BotPlayingStrategy {
     Move makeMove(Player player, Board board);
 }
