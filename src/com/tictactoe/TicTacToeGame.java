@@ -23,7 +23,7 @@ public class TicTacToeGame {
         List<Player> players = new ArrayList<>();
         int iteratorNumber = dimension - 1;
 
-        if (isBotPresent.equals("Y")) {
+        if ("Y".equals(isBotPresent)) {
             iteratorNumber = dimension - 2;
         }
 
@@ -38,7 +38,7 @@ public class TicTacToeGame {
             players.add(new Player(new Symbol(charSymbol.charAt(0)), playerName, PlayerType.HUMAN));
         }
 
-        if (isBotPresent.equals("Y")) {
+        if ("Y".equals(isBotPresent)) {
             System.out.println("What is the name of the BOT :");
             String botName = sc.next();
 
